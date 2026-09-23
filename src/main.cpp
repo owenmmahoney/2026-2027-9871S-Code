@@ -9,7 +9,7 @@
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
     {1, -4},     // Left Chassis Ports (negative port will reverse it!)
-    {3, 2},  // Right Chassis Ports (negative port will reverse it!)
+    {-3, 2},  // Right Chassis Ports (negative port will reverse it!)
 
     12,      // IMU Port
     2.775,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
@@ -256,6 +256,13 @@ void opcontrol() {
     // . . .
     // Put more user control code here!
     // . . .
+
+    if (master.get_digital(DIGITAL_R1))
+      intake.move(100);
+    else if (master.get_digital(DIGITAL_L1))
+      intake.move(-100);
+    else
+      intake.move(0);
 
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
